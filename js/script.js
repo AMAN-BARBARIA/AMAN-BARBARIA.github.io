@@ -5,6 +5,115 @@ document.addEventListener('DOMContentLoaded', () => {
   const navLinks = document.querySelector('.nav-links');
   const navLinksItems = document.querySelectorAll('.nav-links li');
 
+  // Career Journey Animation
+  const careerJourney = document.querySelector('.career-evolution');
+  const journeyProgress = document.querySelector('.journey-progress');
+  const milestones = document.querySelectorAll('.milestone');
+  
+  // Intersection Observer for career journey animation
+  if (careerJourney && 'IntersectionObserver' in window) {
+    const journeyObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Reset animation classes
+          journeyProgress.style.animation = 'none';
+          milestones.forEach(milestone => {
+            milestone.style.animation = 'none';
+          });
+          
+          // Force reflow
+          void careerJourney.offsetWidth;
+          
+          // Restart animations
+          journeyProgress.style.animation = 'grow-journey 1.5s 0.5s ease-out forwards';
+          milestones[0].style.animation = 'fade-in-milestone 0.5s 0.8s ease-out forwards';
+          milestones[1].style.animation = 'fade-in-milestone 0.5s 1.2s ease-out forwards';
+          milestones[2].style.animation = 'fade-in-milestone 0.5s 1.6s ease-out forwards';
+          milestones[3].style.animation = 'fade-in-milestone 0.5s 2.0s ease-out forwards';
+          milestones[4].style.animation = 'fade-in-milestone 0.5s 2.4s ease-out forwards';
+          milestones[5].style.animation = 'fade-in-milestone 0.5s 2.8s ease-out forwards';
+          
+          // Only disconnect if we need this to run once
+          journeyObserver.disconnect();
+        }
+      });
+    }, {
+      threshold: 0.2 // Trigger when 20% of the element is visible
+    });
+    
+    journeyObserver.observe(careerJourney);
+  }
+  
+  // Add hover interactions to milestones
+  milestones.forEach(milestone => {
+    milestone.addEventListener('mouseenter', () => {
+      const year = milestone.getAttribute('data-year');
+      highlightTimelineByYear(year);
+    });
+    
+    milestone.addEventListener('mouseleave', () => {
+      removeTimelineHighlights();
+    });
+    
+    milestone.addEventListener('click', () => {
+      const year = milestone.getAttribute('data-year');
+      scrollToExperienceByYear(year);
+    });
+  });
+  
+  // Function to highlight relevant experience in the timeline
+  function highlightTimelineByYear(year) {
+    document.querySelectorAll('.timeline-item').forEach(item => {
+      const periodText = item.querySelector('.period').textContent;
+      if ((year === '2014' && periodText.includes('2014')) ||
+          (year === '2016' && periodText.includes('2016')) ||
+          (year === '2018' && periodText.includes('2018')) ||
+          (year === '2020' && periodText.includes('2020')) ||
+          (year === '2023' && periodText.includes('2022')) || // Map 2023 to 2022 to maintain highlighting
+          (year === '2025' && periodText.includes('Present'))) {
+        item.classList.add('highlighted');
+      }
+    });
+  }
+  
+  // Function to remove all timeline highlights
+  function removeTimelineHighlights() {
+    document.querySelectorAll('.timeline-item').forEach(item => {
+      item.classList.remove('highlighted');
+    });
+  }
+  
+  // Function to scroll to relevant experience section
+  function scrollToExperienceByYear(year) {
+    const experienceSection = document.getElementById('experience');
+    
+    let targetPeriod = year;
+    // Map milestone years to actual timeline items
+    if (year === '2023') targetPeriod = '2022';
+    if (year === '2025') targetPeriod = 'Present';
+    
+    const targetItem = Array.from(document.querySelectorAll('.timeline-item')).find(item => {
+      const periodText = item.querySelector('.period').textContent;
+      return periodText.includes(targetPeriod);
+    });
+    
+    if (experienceSection && targetItem) {
+      experienceSection.scrollIntoView({ behavior: 'smooth' });
+      
+      // Add a delay to highlight the specific item
+      setTimeout(() => {
+        removeTimelineHighlights(); // Clear any previous highlights
+        targetItem.classList.add('highlighted');
+        
+        // Add a small scroll to ensure the item is well in view
+        window.scrollBy({
+          top: -50,
+          behavior: 'smooth'
+        });
+      }, 1000);
+    }
+  }
+
   if (hamburger) {
     hamburger.addEventListener('click', () => {
       // Toggle navigation menu

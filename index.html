@@ -1,9 +1,289 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aman Barbaria | Professional Profile</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
 
 <body>
-  <h1>Hello World</h1>
-  <p>I'm hosted with GitHub Pages.</p>
+  <header>
+    <div class="container">
+      <nav id="navbar">
+        <div class="logo">AB</div>
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </nav>
+
+      <div class="hero">
+        <h1>Aman Barbaria</h1>
+        <p class="title">Software Engineer</p>
+        <div class="cta-buttons">
+          <a href="#contact" class="btn primary-btn">Contact Me</a>
+          <a href="#" class="btn secondary-btn" id="resume-btn">Download Resume</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <p>I'm a passionate software engineer with expertise in building scalable and efficient applications. With a
+            strong foundation in software design principles and a keen eye for detail, I strive to create elegant
+            solutions to complex problems.</p>
+          <p>My approach combines technical excellence with effective communication, ensuring that I can collaborate
+            seamlessly with cross-functional teams to deliver outstanding results.</p>
+        </div>
+        <div class="about-image">
+          <div class="profile-placeholder">
+            <i class="fas fa-user"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="section">
+    <div class="container">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-container">
+        <div class="skill-category">
+          <h3>Programming Languages</h3>
+          <div class="skill-items">
+            <div class="skill-item">JavaScript</div>
+            <div class="skill-item">TypeScript</div>
+            <div class="skill-item">Python</div>
+            <div class="skill-item">Java</div>
+            <div class="skill-item">SQL</div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Frameworks & Libraries</h3>
+          <div class="skill-items">
+            <div class="skill-item">React</div>
+            <div class="skill-item">Node.js</div>
+            <div class="skill-item">Express</div>
+            <div class="skill-item">Spring Boot</div>
+            <div class="skill-item">Django</div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Tools & Technologies</h3>
+          <div class="skill-items">
+            <div class="skill-item">Git</div>
+            <div class="skill-item">Docker</div>
+            <div class="skill-item">AWS</div>
+            <div class="skill-item">MongoDB</div>
+            <div class="skill-item">PostgreSQL</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="section">
+    <div class="container">
+      <h2 class="section-title">Experience</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Senior Software Engineer</h3>
+            <p class="company">Tech Innovation Inc.</p>
+            <p class="period">2021 - Present</p>
+            <ul class="responsibilities">
+              <li>Led a team of 5 developers in building scalable microservices architecture</li>
+              <li>Implemented CI/CD pipelines reducing deployment time by 60%</li>
+              <li>Optimized database queries improving application performance by 35%</li>
+              <li>Mentored junior developers and conducted code reviews</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Software Developer</h3>
+            <p class="company">Digital Solutions Ltd.</p>
+            <p class="period">2018 - 2021</p>
+            <ul class="responsibilities">
+              <li>Developed and maintained RESTful APIs for client applications</li>
+              <li>Collaborated with UX/UI designers to implement responsive frontend features</li>
+              <li>Participated in agile development processes including daily standups and sprint planning</li>
+              <li>Troubleshooted and resolved production issues</li>
+            </ul>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <h3>Junior Developer</h3>
+            <p class="company">CodeCraft Systems</p>
+            <p class="period">2016 - 2018</p>
+            <ul class="responsibilities">
+              <li>Built features for e-commerce platforms using JavaScript and PHP</li>
+              <li>Assisted in database design and implementation</li>
+              <li>Wrote unit tests to ensure code quality and stability</li>
+              <li>Collaborated with cross-functional teams to deliver projects on time</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="section">
+    <div class="container">
+      <h2 class="section-title">Education</h2>
+      <div class="education-items">
+        <div class="education-item">
+          <h3>Master of Science in Computer Science</h3>
+          <p class="institution">Stanford University</p>
+          <p class="period">2014 - 2016</p>
+          <p class="description">Specialized in Artificial Intelligence and Machine Learning</p>
+        </div>
+        <div class="education-item">
+          <h3>Bachelor of Science in Computer Engineering</h3>
+          <p class="institution">University of California, Berkeley</p>
+          <p class="period">2010 - 2014</p>
+          <p class="description">Graduated with honors, GPA: 3.8/4.0</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <div class="container">
+      <h2 class="section-title">Projects</h2>
+      <div class="project-grid">
+        <div class="project-card">
+          <div class="project-image placeholder">
+            <i class="fas fa-code"></i>
+          </div>
+          <div class="project-details">
+            <h3>E-commerce Platform</h3>
+            <p>A full-stack e-commerce solution with payment processing, inventory management, and admin dashboard.</p>
+            <div class="project-tech">
+              <span>React</span>
+              <span>Node.js</span>
+              <span>MongoDB</span>
+              <span>AWS</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link"><i class="fab fa-github"></i> Github</a>
+              <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Demo</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image placeholder">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <div class="project-details">
+            <h3>Fitness Tracking App</h3>
+            <p>Mobile application for tracking workouts, nutrition, and progress with social features.</p>
+            <div class="project-tech">
+              <span>React Native</span>
+              <span>Firebase</span>
+              <span>GraphQL</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link"><i class="fab fa-github"></i> Github</a>
+              <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> App Store</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image placeholder">
+            <i class="fas fa-robot"></i>
+          </div>
+          <div class="project-details">
+            <h3>AI Content Generator</h3>
+            <p>Web application that uses machine learning to generate personalized content for marketing.</p>
+            <div class="project-tech">
+              <span>Python</span>
+              <span>TensorFlow</span>
+              <span>Flask</span>
+              <span>Vue.js</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link"><i class="fab fa-github"></i> Github</a>
+              <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="container">
+      <h2 class="section-title">Contact Me</h2>
+      <div class="contact-content">
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <p>email@example.com</p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <p>+1 (123) 456-7890</p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <p>San Francisco, CA</p>
+          </div>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="contact-form">
+          <form id="contact-form">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn primary-btn">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Aman Barbaria. All rights reserved.</p>
+      <p>Made with <i class="fas fa-heart"></i> and GitHub Pages</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
 </body>
 
 </html>

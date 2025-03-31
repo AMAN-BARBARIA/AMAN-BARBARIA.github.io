@@ -41,22 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
 
-      if (hamburger && hamburger.classList.contains('active')) {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
-      }
-
       const targetId = this.getAttribute('href');
       if (targetId === '#') return;
 
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
-        const headerOffset = 80;
-        const elementPosition = targetElement.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
         window.scrollTo({
-          top: offsetPosition,
+          top: targetElement.offsetTop - 80, // Offset for fixed header
           behavior: 'smooth'
         });
       }

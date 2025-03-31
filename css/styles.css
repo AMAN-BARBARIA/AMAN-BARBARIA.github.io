@@ -16,8 +16,6 @@
   --box-shadow: 0 4px 20px rgba(74, 108, 247, 0.1);
   --transition: all 0.3s ease;
   --border-radius: 8px;
-  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  --gradient-bg: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
 }
 
 * {
@@ -417,10 +415,10 @@ nav {
   font-weight: 500;
 }
 
-/* Timeline and Experience Section */
+/* Experience Section */
 .timeline {
   position: relative;
-  max-width: 1000px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
@@ -432,266 +430,77 @@ nav {
   top: 0;
   bottom: 0;
   left: 50%;
-  margin-left: -2px;
-  z-index: 1;
-  opacity: 0.5;
+  transform: translateX(-50%);
 }
 
-.experience-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 25px;
-  margin-top: 20px;
-}
-
-.experience-card {
-  background-color: var(--background-color);
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  box-shadow: var(--card-shadow);
-  transition: var(--transition);
-  cursor: pointer;
+.timeline-item {
+  padding: 10px 40px;
   position: relative;
-  border: 1px solid var(--border-color);
-  height: 100%;
-}
-
-.experience-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-  border-color: var(--primary-color);
-}
-
-.experience-card:hover .exp-header {
-  background: var(--gradient-bg);
-}
-
-.experience-card:hover .exp-header h3,
-.experience-card:hover .exp-header p {
-  color: white;
-}
-
-.exp-header {
-  padding: 20px;
-  background-color: var(--secondary-color);
-  transition: var(--transition);
-  position: relative;
-}
-
-.exp-header h3 {
-  margin-bottom: 5px;
-  font-size: 1.2rem;
-  transition: var(--transition);
-}
-
-.exp-company {
-  font-weight: 500;
-  color: var(--primary-color);
-  margin-bottom: 5px;
-  transition: var(--transition);
-}
-
-.exp-period {
-  color: var(--text-light);
-  font-size: 0.85rem;
-  transition: var(--transition);
-}
-
-.exp-expand {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  width: 24px;
-  height: 24px;
-  background: var(--primary-color);
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.exp-expand i {
-  font-size: 12px;
-  transition: var(--transition);
-}
-
-.exp-preview {
-  padding: 15px 20px;
-  min-height: 80px;
-}
-
-.exp-preview p {
-  font-size: 0.9rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
-
-.experience-card:hover .exp-expand {
-  transform: rotate(45deg);
-  background: white;
-  color: var(--primary-color);
-}
-
-.exp-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 15px;
-}
-
-.exp-tag {
-  background-color: var(--tech-bg);
-  color: var(--primary-dark);
-  font-size: 0.75rem;
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-weight: 500;
-}
-
-.exp-highlights {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 10px;
-}
-
-.exp-highlight {
-  color: var(--primary-color);
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-.exp-highlight:not(:last-child)::after {
-  content: '•';
-  color: var(--text-light);
-  margin-left: 5px;
-}
-
-/* Experience Modal */
-.exp-modal {
-  position: fixed;
-  top: 0;
+  width: 50%;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1050;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s;
+  margin-bottom: 30px;
 }
 
-.exp-modal.active {
-  opacity: 1;
-  visibility: visible;
+.timeline-item:nth-child(even) {
+  left: 50%;
 }
 
-.exp-modal-content {
-  background-color: var(--background-color);
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: -10px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  top: 30px;
+  z-index: 1;
+}
+
+.timeline-item:nth-child(even)::before {
+  left: -10px;
+}
+
+.timeline-content {
+  padding: 20px;
+  background-color: white;
   border-radius: var(--border-radius);
-  max-width: 700px;
-  width: 90%;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 0;
+  box-shadow: var(--box-shadow);
   position: relative;
-  transform: scale(0.8);
-  transition: all 0.3s;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
-.exp-modal.active .exp-modal-content {
-  transform: scale(1);
+.timeline-content h3 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
 }
 
-.exp-modal-header {
-  padding: 25px 30px;
-  border-bottom: 1px solid var(--border-color);
-  background: var(--gradient-bg);
-  color: white;
-}
-
-.exp-modal-header h3 {
-  margin-bottom: 8px;
-  font-size: 1.5rem;
-}
-
-.exp-modal-header p {
+.company {
+  font-weight: 500;
   margin-bottom: 5px;
 }
 
-.exp-modal-body {
-  padding: 25px 30px;
+.period {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: 15px;
 }
 
-.exp-modal-body ul {
-  padding-left: 20px;
-  margin-top: 15px;
-  margin-bottom: 20px;
+.responsibilities {
+  margin-left: 20px;
 }
 
-.exp-modal-body li {
+.responsibilities li {
   margin-bottom: 10px;
   position: relative;
-  padding-left: 5px;
 }
 
-.exp-modal-body li::before {
+.responsibilities li::before {
   content: '•';
   color: var(--primary-color);
   font-weight: bold;
-  position: absolute;
-  left: -15px;
-}
-
-.exp-modal-tech {
-  margin-top: 20px;
-  background: var(--background-alt);
-  padding: 15px;
-  border-radius: var(--border-radius);
-}
-
-.exp-modal-tech h4 {
-  font-size: 1rem;
-  margin-bottom: 10px;
-  color: var(--text-color);
-}
-
-.exp-modal-tech-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.exp-close {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 30px;
-  height: 30px;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: var(--transition);
-  z-index: 5;
-}
-
-.exp-close:hover {
-  background: rgba(255, 255, 255, 0.4);
-  transform: rotate(90deg);
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
 }
 
 /* Projects Section */

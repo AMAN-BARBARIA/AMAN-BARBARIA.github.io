@@ -76,7 +76,9 @@ img {
 }
 
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   padding: 14px 28px;
   border-radius: var(--border-radius);
   font-weight: 500;
@@ -91,6 +93,7 @@ img {
   background-color: white;
   color: var(--primary-color);
   border: none;
+  line-height: 1;
 }
 
 .primary-btn:hover {
@@ -411,6 +414,31 @@ nav.scrolled .hamburger .bar {
   align-items: center;
 }
 
+.profile-image {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background-color: var(--secondary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  border: 5px solid white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-image:hover {
+  transform: scale(1.03);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .profile-placeholder {
   width: 300px;
   height: 300px;
@@ -430,286 +458,287 @@ nav.scrolled .hamburger .bar {
 /* Career Evolution Journey */
 .career-evolution {
   margin-top: 50px;
-  padding: 20px 0;
+  padding: 20px 0 40px;
   width: 100%;
 }
 
-.career-evolution h3 {
-  text-align: center;
-  font-size: 1.4rem;
-  color: var(--primary-color);
+.animated-timeline {
+  position: relative;
+  padding-bottom: 150px;
+  overflow: visible;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.timeline-progress-container {
+  position: relative;
   margin-bottom: 30px;
-  position: relative;
-  display: inline-block;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
-.career-evolution h3::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background-color: var(--primary-color);
-  border-radius: 2px;
-}
-
-.journey-track {
-  position: relative;
-  width: 100%;
-  height: 160px;
+.timeline-years {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  margin-bottom: 10px;
 }
 
-.journey-progress {
+.year-marker {
+  font-size: 14px;
+  font-weight: 500;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 5px 0;
+}
+
+.year-marker.active {
+  color: #4285F4;
+  font-weight: 600;
+}
+
+.year-marker:hover {
+  color: #4285F4;
+}
+
+.timeline-track {
+  position: relative;
+  height: 6px;
+  background-color: #E1E1E1;
+  border-radius: 3px;
+}
+
+.progress-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #4285F4;
+  border-radius: 3px;
+  z-index: 3;
+  width: 0%;
+}
+
+.tracker-dot {
   position: absolute;
   top: 50%;
-  left: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-  transform: translateY(-50%);
-  width: 0;
-  border-radius: 2px;
-  z-index: 1;
-  animation: grow-journey 1.5s 0.5s ease-out forwards;
-  clip-path: polygon(0% 50%, 5% 40%, 10% 60%, 15% 40%, 20% 50%, 25% 45%, 30% 55%, 35% 45%, 40% 55%, 45% 45%, 50% 55%, 55% 45%, 60% 55%, 65% 45%, 70% 55%, 75% 45%, 80% 55%, 85% 45%, 90% 55%, 95% 45%, 100% 50%);
-  height: 20px;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  background: white;
+  border: 3px solid #4285F4;
+  border-radius: 50%;
+  z-index: 5;
+  box-shadow: 0 0 10px rgba(66, 133, 244, 0.5);
+  left: 0%;
 }
 
-.milestone {
+/* Styled line for future section with gradient */
+.progress-line.future-section {
+  background: linear-gradient(to right, rgba(66, 133, 244, 0.5) 10%, #F2A900 40%);
+  box-shadow: 0 0 15px rgba(242, 169, 0, 0.6);
+}
+
+.role-cards-container {
   position: relative;
-  z-index: 2;
-  width: 15%;
+  height: 120px;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.role-card {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 160px;
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   align-items: center;
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.milestone:nth-child(2) {
-  animation: fade-in-milestone 0.5s 0.8s ease-out forwards;
-}
-
-.milestone:nth-child(3) {
-  animation: fade-in-milestone 0.5s 1.2s ease-out forwards;
-}
-
-.milestone:nth-child(4) {
-  animation: fade-in-milestone 0.5s 1.6s ease-out forwards;
-}
-
-.milestone:nth-child(5) {
-  animation: fade-in-milestone 0.5s 2.0s ease-out forwards;
-}
-
-.milestone:nth-child(6) {
-  animation: fade-in-milestone 0.5s 2.4s ease-out forwards;
-}
-
-.milestone-dot {
-  width: 18px;
-  height: 18px;
-  background-color: white;
-  border: 3px solid var(--primary-color);
-  border-radius: 50%;
-  margin-bottom: 15px;
-  position: relative;
-  z-index: 3;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
-}
-
-.milestone:hover .milestone-dot {
-  transform: scale(1.2);
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3), 0 0 10px rgba(59, 130, 246, 0.5);
-}
-
-.milestone-content {
   text-align: center;
-  width: 100%;
+  opacity: 0;
+  /* Hide by default */
+  pointer-events: none;
+  /* Disable interaction for hidden cards */
+  transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1;
 }
 
-.year {
-  display: inline-block;
-  font-size: 0.95rem;
+.role-card.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+  transform: translateX(-50%) translateY(0);
+  box-shadow: 0 8px 24px rgba(66, 133, 244, 0.25);
+  border: 2px solid #4285F4;
+}
+
+.role-card.future {
+  border: 2px dashed #F2A900;
+  background-color: rgba(255, 250, 240, 0.95);
+  transition: all 0.5s ease;
+}
+
+.role-card.future.active {
+  border: 2px dashed #F2A900;
+  box-shadow: 0 10px 30px rgba(242, 169, 0, 0.3);
+  animation: futureCardPulse 2s infinite alternate;
+}
+
+.role-card.future h4 {
+  color: #F2A900;
   font-weight: 600;
-  color: white;
-  background: var(--primary-color);
-  padding: 2px 10px;
-  border-radius: 20px;
-  margin-bottom: 8px;
 }
 
-.role {
+.role-card.future .continuing-text {
+  font-style: italic;
+  color: #B67E00;
+  margin-top: 8px;
+  font-size: 12px;
+  animation: textShimmer 3s infinite;
+}
+
+.role-card.future .role-icon {
+  background-color: rgba(242, 169, 0, 0.15);
+  animation: iconGlow 2s infinite alternate;
+}
+
+.role-card.future .role-icon i {
+  color: #F2A900;
+}
+
+.role-icon {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(66, 133, 244, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.role-icon i {
+  font-size: 18px;
+  color: #4285F4;
+}
+
+.role-card h4 {
+  font-size: 14px;
+  color: #4285F4;
+  margin: 0;
+  font-weight: 600;
+}
+
+.timeline-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.control-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
   background: white;
-  border-radius: 8px;
-  padding: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transform: translateY(0);
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
 }
 
-.milestone:hover .role {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+.control-btn:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(59, 130, 246, 0.3);
 }
 
-.role i {
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.control-indicator {
+  font-weight: 600;
   color: var(--primary-color);
   font-size: 1.2rem;
-  margin-bottom: 8px;
+  min-width: 80px;
+  text-align: center;
 }
 
-.role h4 {
-  color: var(--primary-color);
-  font-size: 0.9rem;
-  margin-bottom: 4px;
+@keyframes cardPulse {
+  0% {
+    transform: translateX(-50%) scale(1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  100% {
+    transform: translateX(-50%) scale(1.03);
+    box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15);
+  }
 }
 
-.role p {
-  color: var(--text-light);
-  font-size: 0.8rem;
-  margin: 0;
-}
-
-.role.future {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.1) 100%);
-  border: 1px dashed var(--primary-color);
-}
-
-.role.future i {
-  color: var(--primary-dark);
-}
-
-/* Clean up timeline bar appearance */
-.journey-track::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: #e5e7eb;
-  transform: translateY(-50%);
-  z-index: 0;
-  clip-path: polygon(0% 50%, 5% 40%, 10% 60%, 15% 40%, 20% 50%, 25% 45%, 30% 55%, 35% 45%, 40% 55%, 45% 45%, 50% 55%, 55% 45%, 60% 55%, 65% 45%, 70% 55%, 75% 45%, 80% 55%, 85% 45%, 90% 55%, 95% 45%, 100% 50%);
-  height: 20px;
-}
-
+/* Media query for mobile timeline */
 @media (max-width: 768px) {
-  .journey-track::before {
-    top: 0;
-    bottom: 0;
-    left: 30px;
-    width: 2px;
-    height: auto;
-    transform: none;
-    clip-path: polygon(50% 0%, 40% 5%, 60% 10%, 40% 15%, 50% 20%, 45% 25%, 55% 30%, 45% 35%, 55% 40%, 45% 45%, 55% 50%, 45% 55%, 55% 60%, 45% 65%, 55% 70%, 45% 75%, 55% 80%, 45% 85%, 55% 90%, 45% 95%, 50% 100%);
-    width: 20px;
-    height: 100%;
+  .role-cards-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
   }
 
-  .journey-progress {
-    left: 30px;
-    top: 0;
-    width: 4px;
-    height: 0;
-    transform: none;
-    animation: grow-journey-vertical 1.5s 0.5s ease-out forwards;
-    clip-path: polygon(50% 0%, 40% 5%, 60% 10%, 40% 15%, 50% 20%, 45% 25%, 55% 30%, 45% 35%, 55% 40%, 45% 45%, 55% 50%, 45% 55%, 55% 60%, 45% 65%, 55% 70%, 45% 75%, 55% 80%, 45% 85%, 55% 90%, 45% 95%, 50% 100%);
-    width: 20px;
-  }
-}
-
-@keyframes grow-journey {
-  from {
-    width: 0;
+  .role-card {
+    flex: 0 0 calc(33.333% - 20px);
+    min-width: 120px;
   }
 
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes fade-in-milestone {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+  .year-marker {
+    font-size: 0.85rem;
+    padding: 4px 8px;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .role-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .timeline-controls {
+    padding-top: 10px;
+  }
+
+  .control-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .control-indicator {
+    font-size: 1.1rem;
   }
 }
 
-/* Media queries for career journey */
-@media (max-width: 992px) {
-  .journey-track {
-    height: 200px;
+@media (max-width: 480px) {
+  .role-card {
+    flex: 0 0 calc(50% - 20px);
   }
 
-  .milestone-content {
-    width: 120px;
-  }
-}
-
-@media (max-width: 768px) {
-  .journey-track {
-    height: auto;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 30px;
+  .timeline-years {
+    overflow-x: auto;
+    padding-bottom: 10px;
   }
 
-  .journey-progress {
-    left: 30px;
-    top: 0;
-    width: 4px;
-    height: 0;
-    transform: none;
-    animation: grow-journey-vertical 1.5s 0.5s ease-out forwards;
-  }
-
-  .milestone {
-    width: auto;
-    flex-direction: row;
-    margin-bottom: 30px;
-    padding-left: 15px;
-  }
-
-  .milestone-dot {
-    position: absolute;
-    left: -7.5px;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-bottom: 0;
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
-  }
-
-  .milestone:hover .milestone-dot {
-    transform: translateY(-50%) scale(1.2);
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3), 0 0 10px rgba(59, 130, 246, 0.5);
-  }
-
-  .milestone-content {
-    text-align: left;
-    margin-left: 15px;
-  }
-
-  @keyframes grow-journey-vertical {
-    from {
-      height: 0;
-    }
-
-    to {
-      height: 100%;
-    }
+  .year-marker {
+    padding: 5px 8px;
+    white-space: nowrap;
   }
 }
 
@@ -866,8 +895,9 @@ nav.scrolled .hamburger .bar {
 /* Experience Section */
 .timeline {
   position: relative;
-  max-width: 800px;
-  margin: 0 auto;
+  width: 90%;
+  max-width: 1000px;
+  margin: 120px auto 40px;
 }
 
 .timeline::after {
@@ -926,11 +956,13 @@ nav.scrolled .hamburger .bar {
 }
 
 .timeline-content {
-  padding: 20px;
+  position: relative;
+  min-height: 250px;
+  padding-top: 40px;
+  padding-bottom: 200px;
   background-color: white;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
-  position: relative;
 }
 
 .timeline-content h3 {
@@ -1144,22 +1176,58 @@ nav.scrolled .hamburger .bar {
   gap: 50px;
 }
 
+.contact-info-wrapper {
+  position: relative;
+}
+
 .contact-info {
   background-color: white;
   border-radius: var(--border-radius);
-  padding: 30px;
+  padding: 40px 30px;
   box-shadow: var(--box-shadow);
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.contact-info:hover {
+  transform: translateY(-5px);
+}
+
+.contact-subtitle {
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  margin-bottom: 25px;
+  position: relative;
+  display: inline-block;
+}
+
+.contact-subtitle:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
 }
 
 .contact-item {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  transition: transform 0.2s ease;
+}
+
+.contact-item:hover {
+  transform: translateX(5px);
 }
 
 .contact-item i {
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
   background-color: var(--secondary-color);
   color: var(--primary-color);
   border-radius: 50%;
@@ -1167,17 +1235,29 @@ nav.scrolled .hamburger .bar {
   justify-content: center;
   align-items: center;
   margin-right: 15px;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover i {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.contact-item p {
+  font-size: 1.05rem;
+  font-weight: 500;
 }
 
 .social-links {
   display: flex;
   gap: 15px;
-  margin-top: 30px;
+  margin-top: 35px;
 }
 
 .social-link {
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
   background-color: var(--secondary-color);
   color: var(--primary-color);
   border-radius: 50%;
@@ -1185,46 +1265,128 @@ nav.scrolled .hamburger .bar {
   justify-content: center;
   align-items: center;
   transition: var(--transition);
+  font-size: 1.2rem;
 }
 
 .social-link:hover {
   background-color: var(--primary-color);
   color: white;
-  transform: translateY(-3px);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.contact-form {
+.contact-cta {
   background-color: white;
   border-radius: var(--border-radius);
-  padding: 30px;
   box-shadow: var(--box-shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.form-group {
+.linkedin-message {
+  padding: 40px;
+  text-align: center;
+  position: relative;
+  background-color: var(--secondary-color);
+  border-bottom: 1px solid var(--border-color);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.linkedin-icon-container {
+  width: 80px;
+  height: 80px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
+.linkedin-message i {
+  font-size: 40px;
+  color: #0077B5;
+  margin-bottom: 0;
 }
 
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  font-family: 'Poppins', sans-serif;
+.linkedin-message h3 {
+  color: var(--text-color);
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+}
+
+.linkedin-message p {
+  color: var(--text-light);
+  margin-bottom: 25px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.linkedin-btn {
+  background-color: #0077B5;
+  color: white;
+  border: none;
   transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 30px;
+  font-size: 1.05rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  margin-top: 10px;
+  letter-spacing: 0.5px;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.2);
+.linkedin-btn:hover {
+  background-color: #006097;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  color: white;
+}
+
+.recruiter-note {
+  padding: 30px 40px;
+  position: relative;
+  text-align: center;
+  background-color: white;
+}
+
+.recruiter-note i {
+  font-size: 24px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  background-color: var(--secondary-color);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 15px;
+}
+
+.recruiter-note h4 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.recruiter-note p {
+  color: var(--text-light);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
 }
 
 /* Footer */
@@ -1232,11 +1394,17 @@ footer {
   background-color: var(--primary-color);
   color: white;
   text-align: center;
-  padding: 30px 0;
+  padding: 20px 0;
 }
 
 footer p {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+footer p:last-child {
+  margin-bottom: 0;
 }
 
 /* Animations */
@@ -1291,6 +1459,12 @@ footer p {
 
   .contact-content {
     grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .contact-info,
+  .contact-cta {
+    height: auto;
   }
 }
 
@@ -1377,6 +1551,30 @@ footer p {
     margin: 10% auto;
     padding: 20px;
   }
+
+  .contact-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .contact-item i {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  .contact-subtitle:after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .contact-subtitle {
+    display: block;
+    text-align: center;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1396,6 +1594,11 @@ footer p {
     font-size: 2rem;
   }
 
+  .profile-image {
+    width: 200px;
+    height: 200px;
+  }
+
   .profile-placeholder {
     width: 200px;
     height: 200px;
@@ -1411,5 +1614,61 @@ footer p {
 
   .timeline-content {
     padding: 15px;
+  }
+}
+
+.current-position {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.current-year {
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  min-width: 80px;
+  text-align: center;
+  padding: 8px 16px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* Animations for Future Growth card */
+@keyframes futureCardPulse {
+  0% {
+    transform: translateX(-50%) translateY(0);
+    box-shadow: 0 8px 24px rgba(242, 169, 0, 0.25);
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(-5px);
+    box-shadow: 0 15px 30px rgba(242, 169, 0, 0.4);
+  }
+}
+
+@keyframes iconGlow {
+  0% {
+    box-shadow: 0 0 5px rgba(242, 169, 0, 0.1);
+  }
+
+  100% {
+    box-shadow: 0 0 15px rgba(242, 169, 0, 0.4);
+  }
+}
+
+@keyframes textShimmer {
+  0% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.8;
   }
 }

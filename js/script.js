@@ -406,55 +406,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Form submission handling
-  const contactForm = document.getElementById('contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      // Get form values
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const message = document.getElementById('message').value;
-
-      // Basic validation
-      if (!name || !email || !message) {
-        showFormMessage('Please fill in all fields', 'error');
-        return;
-      }
-
-      // Here you would typically send the form data using fetch or XMLHttpRequest
-      // Since this is a GitHub Pages site (static), we're showing a success message instead
-      // In a real application, you might use a service like Formspree, Netlify Forms, or a custom backend
-
-      // Simulate form submission success
-      showFormMessage('Message sent successfully! I\'ll get back to you soon.', 'success');
-      contactForm.reset();
-    });
-  }
-
-  // Function to show form submission messages
-  function showFormMessage(message, type) {
-    // Check if there's already a message displayed
-    let messageElement = document.querySelector('.form-message');
-
-    // If not, create one
-    if (!messageElement) {
-      messageElement = document.createElement('div');
-      messageElement.className = 'form-message';
-      contactForm.appendChild(messageElement);
-    }
-
-    // Set message and styling
-    messageElement.textContent = message;
-    messageElement.className = `form-message ${type}`;
-
-    // Hide message after 3 seconds
-    setTimeout(() => {
-      messageElement.remove();
-    }, 3000);
-  }
-
   // Navbar scroll effect
   const navbar = document.getElementById('navbar');
   if (navbar) {
@@ -583,4 +534,201 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize
   highlightActiveSection();
+
+  // Timeline animation functionality with IntersectionObserver to trigger when in view
+  const timeline = document.querySelector('.animated-timeline');
+  if (timeline && 'IntersectionObserver' in window) {
+    const yearMarkers = timeline.querySelectorAll('.year-marker');
+    const progressLine = timeline.querySelector('.progress-line');
+    const trackerDot = timeline.querySelector('.tracker-dot');
+    const roleCards = timeline.querySelectorAll('.role-card');
+    
+    let currentIndex = 0;
+    let animationInterval;
+    let timelineObserver;
+    let isAnimating = false;
+    
+    // Function to show a specific role card
+    function showRoleCard(index) {
+      // Hide all cards
+      roleCards.forEach((card, i) => {
+        card.classList.remove('active');
+        card.style.opacity = '0';
+      });
+      
+      // Show and position only the current card
+      const currentCard = roleCards[index];
+      if (currentCard) {
+        currentCard.classList.add('active');
+        
+        // Position the card based on the tracker dot position
+        const totalMarkers = yearMarkers.length;
+        const percentage = (index / (totalMarkers - 1)) * 100;
+        currentCard.style.left = `${percentage}%`;
+        
+        // Special animation for future growth card
+        if (index === yearMarkers.length - 1) {
+          // Scale effect for future card
+          currentCard.style.transform = 'translateX(-50%) scale(0.8)';
+          currentCard.style.opacity = '1';
+          
+          setTimeout(() => {
+            currentCard.style.transform = 'translateX(-50%) scale(1)';
+          }, 100);
+        } else {
+          // Make it visible
+          currentCard.style.opacity = '1';
+        }
+      }
+    }
+    
+    // Function to animate the timeline progression
+    function animateTimeline(targetIndex, duration) {
+      if (isAnimating) return;
+      isAnimating = true;
+      
+      // Calculate target percentage
+      const totalMarkers = yearMarkers.length;
+      const targetPercentage = (targetIndex / (totalMarkers - 1)) * 100;
+      
+      // Get current position
+      const startWidth = parseFloat(progressLine.style.width || '0');
+      const startLeft = parseFloat(trackerDot.style.left || '0');
+      const startTime = performance.now();
+      
+      // Update year markers
+      yearMarkers.forEach((marker, i) => {
+        marker.classList.toggle('active', i <= targetIndex);
+      });
+      
+      // Check if we're moving to the future section
+      if (targetIndex === yearMarkers.length - 1) {
+        progressLine.classList.add('future-section');
+      } else {
+        progressLine.classList.remove('future-section');
+      }
+      
+      // Animation function
+      function step(timestamp) {
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function
+        const eased = progress < 0.5 ? 
+          4 * progress * progress * progress : 
+          1 - Math.pow(-2 * progress + 2, 3) / 2;
+        
+        // Calculate current position
+        const currentWidth = startWidth + (targetPercentage - startWidth) * eased;
+        const currentLeft = startLeft + (targetPercentage - startLeft) * eased;
+        
+        // Update DOM elements
+        progressLine.style.width = `${currentWidth}%`;
+        trackerDot.style.left = `${currentLeft}%`;
+        
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          progressLine.style.width = `${targetPercentage}%`;
+          trackerDot.style.left = `${targetPercentage}%`;
+          
+          showRoleCard(targetIndex);
+          currentIndex = targetIndex;
+          isAnimating = false;
+        }
+      }
+      
+      requestAnimationFrame(step);
+    }
+    
+    // Initialize timeline
+    function initTimeline() {
+      // Reset to initial state
+      progressLine.style.width = '0%';
+      trackerDot.style.left = '0%';
+      currentIndex = 0;
+      
+      // Hide all cards initially
+      roleCards.forEach(card => {
+        card.classList.remove('active');
+        card.style.opacity = '0';
+      });
+      
+      // Show only the first card
+      if (roleCards.length > 0) {
+        roleCards[0].classList.add('active');
+        roleCards[0].style.opacity = '1';
+        roleCards[0].style.left = '0%';
+      }
+      
+      // Set first year marker as active
+      yearMarkers.forEach((marker, i) => {
+        marker.classList.toggle('active', i === 0);
+      });
+      
+      // Add click handling for year markers
+      yearMarkers.forEach((marker, index) => {
+        marker.addEventListener('click', () => {
+          if (!isAnimating) {
+            animateTimeline(index, 1500);
+            
+            // Clear and restart the auto animation interval
+            clearInterval(animationInterval);
+            animationInterval = setInterval(nextPoint, 6000);
+          }
+        });
+      });
+    }
+    
+    // Function to advance to the next point
+    function nextPoint() {
+      const nextIndex = (currentIndex + 1) % yearMarkers.length;
+      
+      // Use longer duration for animation to the future state (last card)
+      if (nextIndex === yearMarkers.length - 1) {
+        animateTimeline(nextIndex, 2500); // Longer animation time for future section
+      } else {
+        animateTimeline(nextIndex, 2000); // Regular animation time
+      }
+    }
+    
+    // Initialize observer to start animation when timeline is visible
+    timelineObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Initialize timeline when it enters viewport
+          initTimeline();
+          
+          // Start animation with a slight delay
+          setTimeout(() => {
+            // Animate to the second year (index 1) after 1.5 seconds
+            animateTimeline(1, 2000);
+            
+            // Set up interval for future animations with variable time
+            animationInterval = setInterval(() => {
+              const nextIndex = (currentIndex + 1) % yearMarkers.length;
+              
+              // Pause longer on the future card
+              if (currentIndex === yearMarkers.length - 1) {
+                clearInterval(animationInterval);
+                setTimeout(() => {
+                  animateTimeline(0, 2000); // Loop back to first card
+                  // Restart the normal interval after looping back
+                  animationInterval = setInterval(nextPoint, 5000);
+                }, 8000); // Stay on future card for 8 seconds
+              } else {
+                nextPoint();
+              }
+            }, 5000); // 5 seconds between regular animations
+          }, 1500);
+          
+          // Only observe once
+          timelineObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.3 }); // Trigger when 30% visible
+    
+    // Start observing
+    timelineObserver.observe(timeline);
+  }
 }); 

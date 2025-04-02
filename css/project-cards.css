@@ -441,6 +441,26 @@
   transition: transform 0.3s ease;
 }
 
+/* Styling for jam-scaling.png - cropping from both sides */
+img[src*="jam-scaling.png"] {
+  object-fit: cover;
+  object-position: calc(20px) center;
+  width: calc(100% + 320px);
+  max-width: calc(100% + 320px);
+  margin-left: -20px;
+  clip-path: inset(0 140px 0 20px);
+}
+
+/* Ensure modal version of jam-scaling.png is also cropped */
+.modal-fullsize-image[src*="jam-scaling.png"] {
+  object-fit: cover;
+  object-position: calc(20px) center;
+  width: calc(100% + 320px);
+  max-width: min(90%, calc(100% + 320px));
+  margin-left: -20px;
+  clip-path: inset(0 175px 0 20px);
+}
+
 /* Modal content container */
 #modal-content-container {
   display: flex;

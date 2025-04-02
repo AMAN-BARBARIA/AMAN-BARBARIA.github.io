@@ -215,25 +215,25 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "Moxie - Online Fitness Platform",
       subtitle: "Lead Engineer - Consumer Team | 2020 - 2022",
       description: `
-        <p>Moxie was built from scratch during the COVID-19 pandemic to connect fitness instructors with clients through live online classes.</p>
+        <p>Moxie was an all-in-one solution for fitness coaches to manage every aspect of their business including live-streaming of classes, scheduling, payments, and promotions.</p>
         
         <h4>Key Achievements:</h4>
         <ul>
-          <li>Designed and developed RESTful APIs and microservices architecture for a platform that scaled to 50,000+ instructors in the first year</li>
-          <li>Implemented real-time video streaming infrastructure using AWS Chime, supporting thousands of concurrent sessions</li>
-          <li>Created a robust payment processing system with Stripe, handling millions in transaction volume</li>
-          <li>Built comprehensive analytics dashboards to track user engagement and instructor performance</li>
-          <li>Optimized backend systems for high-volume traffic, reducing latency by 40%</li>
+          <li>Led the Consumer Team, responsible for user onboarding, classes management, marketplace, and discovery.</li>
+          <li>Designed and developed REST APIs for mobile and web apps allowing 1,00,000+ users streaming live classes in the first year.</p>
+          <li>Built an internal CMS & CRM tool on Slack for the Moxie admin team, increasing operational efficiency by 2x-3x.</p>
         </ul>
         
         <h4>Technologies Used:</h4>
         <div class="modal-tech-stack">
           <span class="tech">Node.js</span>
           <span class="tech">MySQL</span>
-          <span class="tech">Redis</span>
+          <span class="tech">Cassandra</span>
+          <span class="tech">Memcached</span>
           <span class="tech">AWS Chime</span>
           <span class="tech">Stripe</span>
           <span class="tech">React</span>
+          <span class="tech">React Native</span>
         </div>
         
         <div class="modal-links">
@@ -550,34 +550,36 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Function to show a specific role card
     function showRoleCard(index) {
-      // Hide all cards
+      // This function is now primarily used for initial setup
+      // The animation itself handles card transitions
+      
+      // Calculate position
+      const totalMarkers = yearMarkers.length;
+      const percentage = (index / (totalMarkers - 1)) * 100;
+      
+      // Reset all cards first
       roleCards.forEach((card, i) => {
-        card.classList.remove('active');
-        card.style.opacity = '0';
+        // Add transitions for smooth changes
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        
+        if (i !== index) {
+          card.classList.remove('active');
+          card.style.opacity = '0';
+        }
       });
       
-      // Show and position only the current card
+      // Show target card
       const currentCard = roleCards[index];
       if (currentCard) {
         currentCard.classList.add('active');
-        
-        // Position the card based on the tracker dot position
-        const totalMarkers = yearMarkers.length;
-        const percentage = (index / (totalMarkers - 1)) * 100;
         currentCard.style.left = `${percentage}%`;
+        currentCard.style.opacity = '1';
         
-        // Special animation for future growth card
+        // Special handling for future card
         if (index === yearMarkers.length - 1) {
-          // Scale effect for future card
-          currentCard.style.transform = 'translateX(-50%) scale(0.8)';
-          currentCard.style.opacity = '1';
-          
-          setTimeout(() => {
-            currentCard.style.transform = 'translateX(-50%) scale(1)';
-          }, 100);
+          currentCard.style.transform = 'translateX(-50%) scale(1)';
         } else {
-          // Make it visible
-          currentCard.style.opacity = '1';
+          currentCard.style.transform = 'translateX(-50%) translateY(0)';
         }
       }
     }
@@ -595,6 +597,51 @@ document.addEventListener('DOMContentLoaded', () => {
       const startWidth = parseFloat(progressLine.style.width || '0');
       const startLeft = parseFloat(trackerDot.style.left || '0');
       const startTime = performance.now();
+      
+      // Set up cards for animation
+      const nextCard = roleCards[targetIndex];
+      const currentActiveCard = roleCards[currentIndex];
+      
+      // IMPORTANT: Disable all transitions on cards during animation
+      roleCards.forEach(card => {
+        card.style.transition = 'none';
+        // Force reflow
+        void card.offsetWidth;
+      });
+      
+      // Ensure current and next cards are visible but everything else is hidden
+      roleCards.forEach((card, i) => {
+        if (i !== currentIndex && i !== targetIndex) {
+          card.classList.remove('active');
+          card.style.opacity = '0';
+        }
+      });
+      
+      // Prepare next card at the same position as current dot
+      if (nextCard) {
+        nextCard.style.left = `${startLeft}%`;
+        nextCard.style.opacity = '0';
+        nextCard.classList.add('active');
+        
+        // Pre-position it slightly below and scaled down for upcoming animation
+        nextCard.style.transform = 'translateX(-50%) translateY(5px) scale(0.95)';
+        
+        // Set z-index lower at start
+        nextCard.style.zIndex = '1';
+      }
+      
+      // Make sure current card is visible and positioned correctly
+      if (currentActiveCard) {
+        currentActiveCard.style.left = `${startLeft}%`;
+        currentActiveCard.style.opacity = '1';
+        currentActiveCard.classList.add('active');
+        
+        // Set initial transform - will be animated during transition
+        currentActiveCard.style.transform = 'translateX(-50%) translateY(0) scale(1)';
+        
+        // Start with higher z-index
+        currentActiveCard.style.zIndex = '2';
+      }
       
       // Update year markers
       yearMarkers.forEach((marker, i) => {
@@ -620,7 +667,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const elapsed = timestamp - startTime;
         const progress = Math.min(elapsed / duration, 1);
         
-        // Easing function
+        // Enhanced easing function for smoother transitions
         const eased = progress < 0.5 ? 
           4 * progress * progress * progress : 
           1 - Math.pow(-2 * progress + 2, 3) / 2;
@@ -633,13 +680,90 @@ document.addEventListener('DOMContentLoaded', () => {
         progressLine.style.width = `${currentWidth}%`;
         trackerDot.style.left = `${currentLeft}%`;
         
+        // Enhanced card transition logic - calculate phase-specific animations
+        // First half of animation: current card fades out and scales down
+        // Second half: next card fades in and scales up
+        const exitPhase = Math.min(progress * 2, 1); // 0->1 during first half
+        const entryPhase = Math.max(0, (progress - 0.5) * 2); // 0->1 during second half
+        
+        // Move both cards with tracker dot in exact synchronization
+        if (currentActiveCard) {
+          // Position card at tracker dot
+          currentActiveCard.style.left = `${currentLeft}%`; 
+          
+          // Apply exit animation - fade out + scale down + slight Y offset
+          const exitOpacity = Math.max(0, 1 - (exitPhase * 1.5));
+          const exitScale = 1 - (exitPhase * 0.1); // Subtle scale down to 0.9
+          const exitY = exitPhase * 5; // Small upward movement (5px max)
+          
+          currentActiveCard.style.opacity = exitOpacity;
+          currentActiveCard.style.transform = `translateX(-50%) translateY(${exitY}px) scale(${exitScale})`;
+          
+          // Adjust z-index based on animation phase
+          currentActiveCard.style.zIndex = progress > 0.5 ? '1' : '2';
+        }
+        
+        if (nextCard) {
+          // Position card at tracker dot
+          nextCard.style.left = `${currentLeft}%`;
+          
+          // Apply entry animation - fade in + scale up + slight Y offset
+          let entryOpacity, entryScale, entryY;
+          
+          // Special animation for future card (last card)
+          if (targetIndex === yearMarkers.length - 1) {
+            // Golden card gets special animation
+            entryOpacity = Math.min(1, entryPhase * 2); // Faster fade in
+            entryScale = 0.9 + (entryPhase * 0.1); // Scale from 0.9 to 1
+            entryY = (1 - entryPhase) * -8; // Move upward from -8px to 0
+          } else {
+            // Standard cards
+            entryOpacity = Math.min(1, entryPhase * 2); // Faster fade in
+            entryScale = 0.95 + (entryPhase * 0.05); // More subtle scale for regular cards
+            entryY = (1 - entryPhase) * -5; // Move upward from -5px to 0
+          }
+          
+          nextCard.style.opacity = entryOpacity;
+          nextCard.style.transform = `translateX(-50%) translateY(${entryY}px) scale(${entryScale})`;
+          
+          // Adjust z-index based on animation phase
+          nextCard.style.zIndex = progress > 0.5 ? '2' : '1';
+        }
+        
         if (progress < 1) {
           requestAnimationFrame(step);
         } else {
+          // Animation complete
           progressLine.style.width = `${targetPercentage}%`;
           trackerDot.style.left = `${targetPercentage}%`;
           
-          showRoleCard(targetIndex);
+          // Hide all cards except target card
+          roleCards.forEach((card, i) => {
+            // Restore transitions for smooth future interactions
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            
+            if (i !== targetIndex) {
+              card.classList.remove('active');
+              card.style.opacity = '0';
+              card.style.zIndex = '1';
+            }
+          });
+          
+          // Make sure target card is fully visible and positioned correctly
+          if (nextCard) {
+            nextCard.classList.add('active');
+            nextCard.style.opacity = '1';
+            nextCard.style.left = `${targetPercentage}%`;
+            nextCard.style.zIndex = '2';
+            
+            // Special styling for future card
+            if (targetIndex === yearMarkers.length - 1) {
+              nextCard.style.transform = 'translateX(-50%) scale(1)';
+            } else {
+              nextCard.style.transform = 'translateX(-50%) translateY(0)';
+            }
+          }
+          
           currentIndex = targetIndex;
           isAnimating = false;
         }
@@ -655,17 +779,32 @@ document.addEventListener('DOMContentLoaded', () => {
       trackerDot.style.left = '0%';
       currentIndex = 0;
       
-      // Hide all cards initially
+      // Reset all cards first
       roleCards.forEach(card => {
+        // Remove any transitions initially for instant positioning
+        card.style.transition = 'none';
         card.classList.remove('active');
         card.style.opacity = '0';
+        card.style.left = '0%';
+        card.style.transform = 'translateX(-50%) scale(0.95)';
+        card.style.zIndex = '1';
       });
       
-      // Show only the first card
+      // Force reflow to ensure style changes take effect immediately
+      void timeline.offsetWidth;
+      
+      // Now show the first card with transition
       if (roleCards.length > 0) {
-        roleCards[0].classList.add('active');
-        roleCards[0].style.opacity = '1';
-        roleCards[0].style.left = '0%';
+        const firstCard = roleCards[0];
+        firstCard.classList.add('active');
+        firstCard.style.zIndex = '2';
+        
+        // Add transition for smooth effects after initial positioning
+        setTimeout(() => {
+          firstCard.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+          firstCard.style.opacity = '1';
+          firstCard.style.transform = 'translateX(-50%) translateY(0) scale(1)';
+        }, 50);
       }
       
       // Set first year marker as active
@@ -677,7 +816,7 @@ document.addEventListener('DOMContentLoaded', () => {
       yearMarkers.forEach((marker, index) => {
         marker.addEventListener('click', () => {
           if (!isAnimating) {
-            animateTimeline(index, 1500);
+            animateTimeline(index, 800); // Faster animation for better responsiveness
             
             // Clear and restart the auto animation interval
             clearInterval(animationInterval);

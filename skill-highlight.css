@@ -1,0 +1,96 @@
+.skill-item-highlight {
+  background-color: rgba(59, 130, 246, 0.4) !important;
+  border: 1px solid rgba(37, 99, 235, 0.6) !important;
+  font-weight: 600 !important;
+}
+
+.skill-item-highlight:hover {
+  background-color: var(--primary-color) !important;
+  box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4) !important;
+}
+
+/* Custom icon colors */
+.fa-node-js {
+  color: #68A063 !important;
+}
+
+.fa-database {
+  color: #336791 !important;
+  /* PostgreSQL blue */
+}
+
+/* Override the database-elephant::after to remove the dot */
+.database-elephant::after {
+  display: none !important;
+}
+
+.fa-leaf {
+  color: #4DB33D !important;
+  /* MongoDB green */
+}
+
+.fa-search {
+  color: #FEC514 !important;
+  /* Elasticsearch yellow */
+}
+
+.fa-aws {
+  color: #FF9900 !important;
+  /* AWS orange */
+}
+
+.fa-ethereum {
+  color: #3C3C3D !important;
+  /* Ethereum */
+}
+
+.fa-train {
+  color: #CC0000 !important;
+  /* Ruby red */
+}
+
+.fa-eye {
+  color: #1B90A7 !important;
+  /* Cassandra blue */
+}
+
+.fa-brain {
+  color: #2962FF !important;
+  /* Vector DB blue */
+}
+
+.fa-chart-line {
+  color: #1E88E5 !important;
+  /* Business Intelligence blue */
+}
+
+.fa-exchange-alt {
+  transform: rotate(90deg);
+  color: #FF6600 !important;
+  /* RabbitMQ orange */
+}
+
+.golang-icon {
+  color: #00ADD8 !important;
+  /* Golang blue */
+}
+
+.fa-robot {
+  color: #10A37F !important;
+  /* Generative AI green */
+}
+
+/* Special effects for highlighted skills */
+.skill-item-highlight:hover i {
+  color: white !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.skill-item:hover .golang-icon {
+  color: white !important;
+}
+
+.skill-item:hover .fa-robot {
+  color: white !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}

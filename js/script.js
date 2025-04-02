@@ -604,8 +604,15 @@ document.addEventListener('DOMContentLoaded', () => {
       // Check if we're moving to the future section
       if (targetIndex === yearMarkers.length - 1) {
         progressLine.classList.add('future-section');
+        // Make tracker dot match the future card color scheme
+        trackerDot.style.backgroundColor = '#F2A900'; // Golden/yellow color for 2025
+        trackerDot.style.borderColor = '#F2A900';
+        trackerDot.style.boxShadow = '0 0 15px rgba(242, 169, 0, 0.9)';
       } else {
         progressLine.classList.remove('future-section');
+        trackerDot.style.backgroundColor = 'white';
+        trackerDot.style.borderColor = '#4285F4';
+        trackerDot.style.boxShadow = '0 0 10px rgba(66, 133, 244, 0.5)';
       }
       
       // Animation function
@@ -686,9 +693,9 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Use longer duration for animation to the future state (last card)
       if (nextIndex === yearMarkers.length - 1) {
-        animateTimeline(nextIndex, 2500); // Longer animation time for future section
+        animateTimeline(nextIndex, 1250); // 50% faster for future section (2500 * 0.5 = 1250)
       } else {
-        animateTimeline(nextIndex, 2000); // Regular animation time
+        animateTimeline(nextIndex, 1000); // 50% faster for regular animation (2000 * 0.5 = 1000)
       }
     }
     
@@ -699,36 +706,20 @@ document.addEventListener('DOMContentLoaded', () => {
           // Initialize timeline when it enters viewport
           initTimeline();
           
-          // Start animation with a slight delay
-          setTimeout(() => {
-            // Animate to the second year (index 1) after 1.5 seconds
-            animateTimeline(1, 2000);
-            
-            // Set up interval for future animations with variable time
-            animationInterval = setInterval(() => {
-              const nextIndex = (currentIndex + 1) % yearMarkers.length;
-              
-              // Pause longer on the future card
-              if (currentIndex === yearMarkers.length - 1) {
-                clearInterval(animationInterval);
-                setTimeout(() => {
-                  animateTimeline(0, 2000); // Loop back to first card
-                  // Restart the normal interval after looping back
-                  animationInterval = setInterval(nextPoint, 5000);
-                }, 8000); // Stay on future card for 8 seconds
-              } else {
-                nextPoint();
-              }
-            }, 5000); // 5 seconds between regular animations
-          }, 1500);
+          // Start automatic progression with the updated faster speed (50% faster)
+          animationInterval = setInterval(nextPoint, 3000); // 50% faster (6000 * 0.5 = 3000)
           
-          // Only observe once
+          // Show first card immediately
+          showRoleCard(0);
+          
+          // Only trigger once
           timelineObserver.disconnect();
         }
       });
-    }, { threshold: 0.3 }); // Trigger when 30% visible
+    }, {
+      threshold: 0.2
+    });
     
-    // Start observing
     timelineObserver.observe(timeline);
   }
 }); 

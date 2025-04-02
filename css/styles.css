@@ -534,8 +534,8 @@ nav.scrolled .hamburger .bar {
 
 /* Styled line for future section with gradient */
 .progress-line.future-section {
-  background: linear-gradient(to right, rgba(66, 133, 244, 0.5) 10%, #F2A900 40%);
-  box-shadow: 0 0 15px rgba(242, 169, 0, 0.6);
+  background: linear-gradient(to right, rgba(66, 133, 244, 0.5) 0%, #F2A900 100%);
+  box-shadow: 0 0 20px rgba(242, 169, 0, 0.9);
 }
 
 .role-cards-container {

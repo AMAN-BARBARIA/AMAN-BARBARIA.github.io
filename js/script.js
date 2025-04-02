@@ -361,9 +361,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Open modal with project details
+  // Open modal with project details when clicking on the card (but not on the image slider)
   projectCards.forEach(card => {
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
+      // Check if the click originated from or within an image-slider
+      if (e.target.closest('.image-slider')) {
+        // Don't open project details modal when clicking on image slider
+        return;
+      }
+      
       const projectId = card.getAttribute('data-project');
       const project = projectData[projectId];
 
@@ -377,32 +383,205 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         modal.classList.add('active');
+        modal.style.display = 'flex';
         document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
       }
     });
   });
 
-  // Close modal on close button click
-  if (closeButton) {
-    closeButton.addEventListener('click', () => {
-      modal.classList.remove('active');
-      document.body.style.overflow = ''; // Restore scrolling
+  // Image Slider Functionality
+  const sliders = document.querySelectorAll('.image-slider');
+  
+  sliders.forEach((slider, sliderIndex) => {
+    const images = slider.querySelectorAll('.slider-image');
+    const dots = slider.querySelectorAll('.slider-dot');
+    let currentIndex = 0;
+    let intervalId;
+
+    // Auto slide every 3 seconds, but with a staggered start delay for each card
+    function startAutoSlide() {
+      // Base interval of 3 seconds with a slight variation per slider (300-500ms)
+      const baseInterval = 3000;
+      const cardInterval = baseInterval + (sliderIndex * 450);
+      
+      intervalId = setInterval(() => {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateSlider();
+      }, cardInterval);
+    }
+
+    function stopAutoSlide() {
+      clearInterval(intervalId);
+    }
+
+    function updateSlider() {
+      images.forEach((img, index) => {
+        img.style.opacity = index === currentIndex ? '1' : '0';
+      });
+      
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    // Click on dots to change slides
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent triggering card click
+        currentIndex = index;
+        updateSlider();
+        stopAutoSlide();
+        startAutoSlide();
+      });
     });
+
+    // Pause auto slide on hover
+    slider.addEventListener('mouseenter', stopAutoSlide);
+    slider.addEventListener('mouseleave', startAutoSlide);
+
+    // Click on slider to open modal with current image
+    slider.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent triggering the project card click event
+      const projectCard = slider.closest('.project-card');
+      const projectId = projectCard.getAttribute('data-project');
+      openImageModal(projectId, currentIndex);
+    });
+
+    // Start auto slide
+    startAutoSlide();
+  });
+
+  // Modal image functionality with navigation
+  function openImageModal(projectId, initialImageIndex = 0) {
+    const projectCard = document.querySelector(`.project-card[data-project="${projectId}"]`);
+    const sliderImages = projectCard.querySelectorAll('.slider-image');
+    
+    // Clear modal content
+    modalContent.innerHTML = '';
+    
+    // Create full-size image element
+    const fullImage = document.createElement('img');
+    fullImage.classList.add('modal-fullsize-image');
+    fullImage.dataset.currentIndex = initialImageIndex;
+    fullImage.dataset.projectId = projectId;
+    fullImage.src = sliderImages[initialImageIndex].src;
+    fullImage.alt = sliderImages[initialImageIndex].alt || 'Project image';
+    
+    // Add image to modal
+    modalContent.appendChild(fullImage);
+    
+    // Show modal
+    modal.style.display = 'flex';
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Set up navigation buttons
+    const prevButton = document.querySelector('.prev-button');
+    const nextButton = document.querySelector('.next-button');
+    
+    // Show/hide navigation buttons based on image count
+    if (sliderImages.length <= 1) {
+      prevButton.style.display = 'none';
+      nextButton.style.display = 'none';
+    } else {
+      prevButton.style.display = 'flex';
+      nextButton.style.display = 'flex';
+      
+      // Set up event listeners for navigation buttons
+      prevButton.onclick = (e) => {
+        e.stopPropagation();
+        navigateModalImage(projectId, 'prev');
+      };
+      
+      nextButton.onclick = (e) => {
+        e.stopPropagation();
+        navigateModalImage(projectId, 'next');
+      };
+    }
+  }
+  
+  // Navigate between images in modal
+  function navigateModalImage(projectId, direction) {
+    const projectCard = document.querySelector(`.project-card[data-project="${projectId}"]`);
+    const sliderImages = projectCard.querySelectorAll('.slider-image');
+    const modalImage = document.querySelector('.modal-fullsize-image');
+    
+    let currentIndex = parseInt(modalImage.dataset.currentIndex);
+    let newIndex;
+    
+    if (direction === 'next') {
+      newIndex = (currentIndex + 1) % sliderImages.length;
+    } else {
+      newIndex = (currentIndex - 1 + sliderImages.length) % sliderImages.length;
+    }
+    
+    // Add transition effect
+    modalImage.style.opacity = '0.5';
+    modalImage.style.transform = direction === 'next' ? 'translateX(20px)' : 'translateX(-20px)';
+    
+    // Update modal image after a short delay (for transition effect)
+    setTimeout(() => {
+      modalImage.src = sliderImages[newIndex].src;
+      modalImage.alt = sliderImages[newIndex].alt || 'Project image';
+      modalImage.dataset.currentIndex = newIndex;
+      
+      // Reset the opacity and position with transition
+      setTimeout(() => {
+        modalImage.style.opacity = '1';
+        modalImage.style.transform = 'translateX(0)';
+      }, 50);
+    }, 150);
   }
 
-  // Close modal on outside click
-  window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.classList.remove('active');
-      document.body.style.overflow = ''; // Restore scrolling
+  // Add keyboard navigation
+  window.addEventListener('keydown', (e) => {
+    const modalImage = document.querySelector('.modal-fullsize-image');
+    
+    if (modal.classList.contains('active')) {
+      // Handle Escape key to close modal
+      if (e.key === 'Escape') {
+        modal.style.display = 'none';
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        return;
+      }
+      
+      // Handle arrow keys for image navigation if we're viewing an image
+      if (modalImage) {
+        const projectId = modalImage.dataset.projectId;
+        
+        if (e.key === 'ArrowLeft') {
+          navigateModalImage(projectId, 'prev');
+        } else if (e.key === 'ArrowRight') {
+          navigateModalImage(projectId, 'next');
+        }
+      }
     }
   });
 
-  // Close modal on escape key
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) {
+  // Replace original project card image click handler
+  document.querySelectorAll('.project-card .project-image').forEach(imageContainer => {
+    imageContainer.addEventListener('click', function(e) {
+      // The click event will be handled by the slider or direct image click
+      // functionality defined above
+    });
+  });
+
+  // Close modal functionality
+  if (closeButton) {
+    closeButton.addEventListener('click', () => {
+      modal.style.display = 'none';
       modal.classList.remove('active');
-      document.body.style.overflow = ''; // Restore scrolling
+      document.body.style.overflow = '';
+    });
+  }
+
+  // Close modal when clicking outside content
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
     }
   });
 

@@ -1,0 +1,452 @@
+/* Custom styling for project cards */
+
+.project-card[data-project="jam"] {
+  border-color: #4E1B53;
+  background: linear-gradient(135deg, #4E1B53 0%, #8A3BAD 100%);
+}
+
+.project-card[data-project="jam"] .project-image,
+.project-card[data-project="jam"] .project-details h3,
+.project-card[data-project="jam"] .project-details p,
+.project-card[data-project="jam"] .project-link {
+  color: white;
+}
+
+.project-card[data-project="jam"] .project-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background-color: white;
+  position: relative;
+  overflow: hidden;
+  padding: 8px;
+  border: none;
+}
+
+.project-card[data-project="jam"] .project-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.project-card[data-project="jam"]:hover .project-image img {
+  transform: scale(1.05);
+}
+
+.project-card[data-project="jam"] .project-tech span {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.project-card[data-project="jam"]:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(78, 27, 83, 0.3);
+}
+
+/* Additional styling to override the default card top border */
+.project-card[data-project="jam"]::after {
+  background: linear-gradient(135deg, #4E1B53 0%, #8A3BAD 100%);
+}
+
+/* Moxie Project Card */
+.project-card[data-project="moxie"] {
+  border-color: #E0742C;
+  background: linear-gradient(135deg, #E0742C 0%, #F19250 100%);
+}
+
+.project-card[data-project="moxie"] .project-image,
+.project-card[data-project="moxie"] .project-details h3,
+.project-card[data-project="moxie"] .project-details p,
+.project-card[data-project="moxie"] .project-link {
+  color: white;
+}
+
+.project-card[data-project="moxie"] .project-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background-color: white;
+  position: relative;
+  overflow: hidden;
+  padding: 8px;
+  border: none;
+}
+
+.project-card[data-project="moxie"] .project-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.project-card[data-project="moxie"]:hover .project-image img {
+  transform: scale(1.05);
+}
+
+.project-card[data-project="moxie"] .project-tech span {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.project-card[data-project="moxie"]:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(224, 116, 44, 0.3);
+}
+
+.project-card[data-project="moxie"]::after {
+  background: linear-gradient(135deg, #E0742C 0%, #F19250 100%);
+}
+
+/* Thursday Project Card */
+.project-card[data-project="thursday"] {
+  border-color: #6633FF;
+  background: linear-gradient(135deg, #6633FF 0%, #8355FF 100%);
+}
+
+.project-card[data-project="thursday"] .project-image,
+.project-card[data-project="thursday"] .project-details h3,
+.project-card[data-project="thursday"] .project-details p,
+.project-card[data-project="thursday"] .project-link {
+  color: white;
+}
+
+.project-card[data-project="thursday"] .project-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background-color: white;
+  position: relative;
+  overflow: hidden;
+  padding: 8px;
+  border: none;
+}
+
+.project-card[data-project="thursday"] .project-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.project-card[data-project="thursday"]:hover .project-image img {
+  transform: scale(1.05);
+}
+
+.project-card[data-project="thursday"] .project-tech span {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.project-card[data-project="thursday"]:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(102, 51, 255, 0.3);
+}
+
+.project-card[data-project="thursday"]::after {
+  background: linear-gradient(135deg, #6633FF 0%, #8355FF 100%);
+}
+
+/* OST Project Card */
+.project-card[data-project="ost"] {
+  border-color: #438BAD;
+  background: linear-gradient(135deg, #438BAD 0%, #65A7C6 100%);
+}
+
+.project-card[data-project="ost"] .project-image,
+.project-card[data-project="ost"] .project-details h3,
+.project-card[data-project="ost"] .project-details p,
+.project-card[data-project="ost"] .project-link {
+  color: white;
+}
+
+.project-card[data-project="ost"] .project-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background-color: white;
+  position: relative;
+  overflow: hidden;
+  padding: 8px;
+  border: none;
+}
+
+.project-card[data-project="ost"] .project-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.project-card[data-project="ost"]:hover .project-image img {
+  transform: scale(1.05);
+}
+
+.project-card[data-project="ost"] .project-tech span {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.project-card[data-project="ost"]:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(67, 139, 173, 0.3);
+}
+
+.project-card[data-project="ost"]::after {
+  background: linear-gradient(135deg, #438BAD 0%, #65A7C6 100%);
+}
+
+.project-card[data-project="ost"] .project-image .slider-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  object-fit: contain;
+  transform: scale(1.3);
+}
+
+.slider-image:first-child {
+  opacity: 1;
+}
+
+.project-card[data-project="ost"]:hover .project-image .slider-image {
+  transform: scale(1.35);
+}
+
+/* Pepo Project Card */
+.project-card[data-project="pepo"] {
+  border-color: #30B3C5;
+  background: linear-gradient(135deg, #30B3C5 0%, #4CCAD9 100%);
+}
+
+.project-card[data-project="pepo"] .project-image,
+.project-card[data-project="pepo"] .project-details h3,
+.project-card[data-project="pepo"] .project-details p,
+.project-card[data-project="pepo"] .project-link {
+  color: white;
+}
+
+.project-card[data-project="pepo"] .project-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background-color: white;
+  position: relative;
+  overflow: hidden;
+  padding: 8px;
+  border: none;
+}
+
+.project-card[data-project="pepo"] .project-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.3s ease;
+  transform: scale(1.3);
+}
+
+.project-card[data-project="pepo"]:hover .project-image img {
+  transform: scale(1.35);
+}
+
+.project-card[data-project="pepo"] .project-tech span {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.project-card[data-project="pepo"]:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(48, 179, 197, 0.3);
+}
+
+.project-card[data-project="pepo"]::after {
+  background: linear-gradient(135deg, #30B3C5 0%, #4CCAD9 100%);
+}
+
+/* Hem Project Card */
+.project-card[data-project="hem"] {
+  border-color: #D28568;
+  background: linear-gradient(135deg, #D28568 0%, #E5A189 100%);
+}
+
+.project-card[data-project="hem"] .project-image,
+.project-card[data-project="hem"] .project-details h3,
+.project-card[data-project="hem"] .project-details p,
+.project-card[data-project="hem"] .project-link {
+  color: white;
+}
+
+.project-card[data-project="hem"] .project-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background-color: white;
+  position: relative;
+  overflow: hidden;
+  padding: 8px;
+  border: none;
+}
+
+.project-card[data-project="hem"] .project-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.3s ease;
+  transform: scale(1.3);
+}
+
+.project-card[data-project="hem"]:hover .project-image img {
+  transform: scale(1.35);
+}
+
+.project-card[data-project="hem"] .project-tech span {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.project-card[data-project="hem"]:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(210, 133, 104, 0.3);
+}
+
+.project-card[data-project="hem"]::after {
+  background: linear-gradient(135deg, #D28568 0%, #E5A189 100%);
+}
+
+/* Optional: Style other project cards as needed */
+
+/* General project card styling */
+.project-card .project-image {
+  background-color: white;
+  padding: 0;
+  margin: 0;
+  border: none;
+  overflow: hidden;
+}
+
+.project-card .project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+/* Image slider styling - enhanced */
+.image-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.slider-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  object-fit: contain;
+}
+
+.slider-image:first-child {
+  opacity: 1;
+}
+
+.slider-controls {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+}
+
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.slider-dot.active {
+  background-color: white;
+}
+
+/* Modal Navigation Buttons */
+.modal-nav-buttons {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.modal-nav-button {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 0 20px;
+  transform: translateY(-50%);
+  opacity: 0.7;
+}
+
+.modal-nav-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Modal image styling */
+.modal-fullsize-image {
+  max-width: 90%;
+  max-height: 80vh;
+  margin: 0 auto;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+/* Modal content container */
+#modal-content-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}

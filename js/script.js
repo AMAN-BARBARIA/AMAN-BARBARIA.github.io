@@ -382,6 +382,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         `;
 
+        // Hide the navigation buttons for project details modal
+        const navButtons = document.querySelector('.modal-nav-buttons');
+        if (navButtons) {
+          navButtons.style.display = 'none';
+        }
+
         modal.classList.add('active');
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
@@ -475,17 +481,16 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
     
-    // Set up navigation buttons
+    // Get navigation buttons
+    const navButtons = document.querySelector('.modal-nav-buttons');
     const prevButton = document.querySelector('.prev-button');
     const nextButton = document.querySelector('.next-button');
     
     // Show/hide navigation buttons based on image count
     if (sliderImages.length <= 1) {
-      prevButton.style.display = 'none';
-      nextButton.style.display = 'none';
+      navButtons.style.display = 'none';
     } else {
-      prevButton.style.display = 'flex';
-      nextButton.style.display = 'flex';
+      navButtons.style.display = 'flex';
       
       // Set up event listeners for navigation buttons
       prevButton.onclick = (e) => {

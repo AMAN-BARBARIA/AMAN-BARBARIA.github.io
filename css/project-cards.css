@@ -356,6 +356,7 @@
   height: 100%;
   overflow: hidden;
   cursor: pointer;
+  z-index: 2;
 }
 
 .slider-image {
@@ -367,6 +368,7 @@
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
   object-fit: contain;
+  pointer-events: none;
 }
 
 .slider-image:first-child {
@@ -390,6 +392,7 @@
   background-color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
   transition: background-color 0.3s ease;
+  pointer-events: auto;
 }
 
 .slider-dot.active {
@@ -445,12 +448,13 @@
   border-radius: 4px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
+  background-color: white;
 }
 
 /* Styling for jam-scaling.png - cropping from both sides */
 img[src*="jam-scaling.png"] {
   object-fit: cover;
-  object-position: calc(20px) center;
+  object-position: calc(50px) center;
   width: calc(100% + 320px);
   max-width: calc(100% + 320px);
   margin-left: -20px;
@@ -460,7 +464,7 @@ img[src*="jam-scaling.png"] {
 /* Ensure modal version of jam-scaling.png is also cropped */
 .modal-fullsize-image[src*="jam-scaling.png"] {
   object-fit: cover;
-  object-position: calc(20px) center;
+  object-position: calc(50px) center;
   width: calc(100% + 320px);
   max-width: min(90%, calc(100% + 320px));
   margin-left: -20px;
@@ -475,10 +479,14 @@ img[src*="jam-scaling.png"] {
   width: 100%;
   height: 100%;
   padding: 20px;
+  background-color: white;
+  border-radius: 8px;
 }
 
 .project-card {
   position: relative !important;
+  cursor: pointer;
+  z-index: 1;
 }
 
 /* Add the missing base style for the colored line at the top of project cards */
@@ -490,6 +498,7 @@ img[src*="jam-scaling.png"] {
   width: 100%;
   height: 4px;
   z-index: 1;
+  pointer-events: none;
 }
 
 .project-details {
@@ -498,8 +507,9 @@ img[src*="jam-scaling.png"] {
   flex-direction: column;
   height: 100%;
   position: relative !important;
-  min-height: 300px !important;
-  /* Ensure all cards have minimum height for consistency */
+  min-height: 350px !important;
+  cursor: pointer;
+  z-index: 1;
 }
 
 .project-details h3 {

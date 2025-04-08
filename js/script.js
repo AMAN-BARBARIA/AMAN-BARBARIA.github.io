@@ -116,49 +116,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (hamburger) {
     hamburger.addEventListener('click', () => {
-      // Toggle navigation menu
-      navLinks.classList.toggle('active');
       hamburger.classList.toggle('active');
-
-      // Animate links
-      navLinksItems.forEach((link, index) => {
-        if (link.style.animation) {
-          link.style.animation = '';
-        } else {
-          link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
-        }
-      });
+      navLinks.classList.toggle('active');
     });
   }
 
-  // Close mobile menu when a link is clicked
-  navLinksItems.forEach(item => {
-    item.addEventListener('click', () => {
-      if (navLinks.classList.contains('active')) {
-        navLinks.classList.remove('active');
-        hamburger.classList.remove('active');
-
-        navLinksItems.forEach(link => {
-          link.style.animation = '';
-        });
-      }
-    });
-  });
-
-  // Smooth scrolling for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+  // Smooth scrolling for nav links
+  const links = document.querySelectorAll('.nav-links a');
+  links.forEach(link => {
+    link.addEventListener('click', e => {
       e.preventDefault();
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('active');
 
-      const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
-
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        window.scrollTo({
-          top: targetElement.offsetTop - 80, // Offset for fixed header
-          behavior: 'smooth'
-        });
+      const targetId = link.getAttribute('href');
+      const targetSection = document.querySelector(targetId);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth' });
       }
     });
   });
@@ -177,13 +151,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const projectCards = document.querySelectorAll('.project-card');
   const modal = document.getElementById('project-modal');
   const modalContent = document.getElementById('modal-content-container');
-  const closeButton = document.querySelector('.close-button');
 
   // Project data
   const projectData = {
     jam: {
       title: "Jam - Decentralized Social App",
-      subtitle: "Product Lead | 2022 - Present",
+      subtitle: "Product Owner | 2022 - 2023",
+      domain: "Blockchain",
       description: `
         <p>Jam is the first fully functional social dApp built on the Farcaster protocol, providing a web3 social media experience with advanced features.</p>
         
@@ -194,6 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <li>Developed trending topics algorithm and curated news features, increasing user engagement by 28%</li>
           <li>Integrated with Farcaster Hubs for decentralized data synchronization, ensuring data persistence and user sovereignty</li>
           <li>Built a responsive frontend interface with React Native, providing consistent experiences across web and mobile platforms</li>
+          <li>Leveraged OpenAI's vector embeddings along with Weaviate, a vector database, to provide semantic search improving content discovery by 40%</li>
         </ul>
         
         <h4>Technologies Used:</h4>
@@ -214,6 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     moxie: {
       title: "Moxie - Online Fitness Platform",
       subtitle: "Lead Engineer - Consumer Team | 2020 - 2022",
+      domain: "E-commerce",
       description: `
         <p>Moxie was an all-in-one solution for fitness coaches to manage every aspect of their business including live-streaming of classes, scheduling, payments, and promotions.</p>
         
@@ -244,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
     thursday: {
       title: "Thursday - Remote Team Socialization",
       subtitle: "Lead Engineer | 2019 - 2020",
+      domain: "SaaS",
       description: `
         <p>Thursday was developed to help remote teams socialize and engage through planned activities and events, addressing the growing demand for virtual team-building solutions.</p>
         
@@ -274,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ost: {
       title: "OST - Blockchain Ecosystem",
       subtitle: "Senior Software Engineer | 2017 - 2019",
+      domain: "Blockchain SaaS",
       description: `
         <p>OST provides blockchain infrastructure for businesses, simplifying the integration of cryptocurrency and blockchain features into applications.</p>
         
@@ -304,6 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
     pepo: {
       title: "Pepo Campaigns - Email Marketing Platform",
       subtitle: "Backend Engineer | 2016 - 2017",
+      domain: "SaaS",
       description: `
         <p>Pepo Campaigns is a scalable email marketing platform built on AWS SES, designed to handle millions of emails while maintaining cost-effectiveness.</p>
         
@@ -333,6 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
     hem: {
       title: "Hem.com - BI Solutions",
       subtitle: "Business Intelligence Engineer | 2014 - 2016",
+      domain: "E-commerce",
       description: `
         <p>Developed business intelligence solutions for Hem.com, a customizable online furniture store, enabling data-driven decision making across the organization.</p>
         
@@ -361,9 +341,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Ensure project cards and sliders are properly clickable
   // Open modal with project details when clicking on the card (but not on the image slider)
   projectCards.forEach(card => {
-    card.addEventListener('click', (e) => {
+    // Remove any existing click handler to avoid duplication
+    card.removeEventListener('click', handleCardClick);
+    
+    // Add click handler
+    card.addEventListener('click', handleCardClick);
+    
+    // Define the click handler as a named function so we can remove it if needed
+    function handleCardClick(e) {
       // Check if the click originated from or within an image-slider
       if (e.target.closest('.image-slider')) {
         // Don't open project details modal when clicking on image slider
@@ -374,11 +362,103 @@ document.addEventListener('DOMContentLoaded', () => {
       const project = projectData[projectId];
 
       if (project) {
+        // Parse the subtitle to extract role and years
+        const subtitleParts = project.subtitle.split('|');
+        const role = subtitleParts[0].trim();
+        const years = subtitleParts[1] ? subtitleParts[1].trim() : '';
+
+        // Extract background gradient colors from project card for consistency
+        const cardStyle = window.getComputedStyle(card);
+        const bgColor = cardStyle.background;
+        
+        // Determine domain badge color and icon based on project type
+        let domainBadgeStyle = '';
+        let domainIcon = '';
+        let headerImage = '';
+        let lightBgColor = '';
+        
+        if (projectId === 'jam' || projectId === 'ost') {
+          domainBadgeStyle = 'background: linear-gradient(135deg, #4E1B53 0%, #8A3BAD 100%);'; // Purple for blockchain
+          domainIcon = '<i class="fab fa-ethereum"></i> ';
+          headerImage = projectId === 'jam' ? './images/jam-hero-image.png' : './images/ost-kyc.png';
+          lightBgColor = 'rgba(138, 59, 173, 0.03)'; // Very light purple
+        } else if (projectId === 'moxie' || projectId === 'hem') {
+          domainBadgeStyle = 'background: linear-gradient(135deg, #D28568 0%, #E5A189 100%);'; // Orange for e-commerce
+          domainIcon = '<i class="fas fa-shopping-cart"></i> ';
+          headerImage = projectId === 'moxie' ? './images/moxie-web-mobile.png' : './images/hem-shelf-configurator.png';
+          lightBgColor = 'rgba(229, 161, 137, 0.03)'; // Very light orange
+        } else if (projectId === 'thursday' || projectId === 'pepo') {
+          domainBadgeStyle = 'background: linear-gradient(135deg, #30B3C5 0%, #4CCAD9 100%);'; // Blue for SaaS
+          domainIcon = '<i class="fas fa-cloud"></i> ';
+          headerImage = projectId === 'thursday' ? './images/thursday-hero-image.png' : './images/pepo-hero-image.png';
+          lightBgColor = 'rgba(76, 202, 217, 0.03)'; // Very light blue
+        }
+
+        // Completely redesigned modal with more elegant, professional layout
         modalContent.innerHTML = `
-          <h2>${project.title}</h2>
-          <p class="modal-subtitle">${project.subtitle}</p>
-          <div class="modal-description">
-            ${project.description}
+          <div class="md-showcase">
+            <div class="md-showcase__header" style="${domainBadgeStyle.replace('background', 'background-image')}">
+              <div class="md-showcase__header-bg" style="background-image: url('${headerImage}')"></div>
+              <div class="md-showcase__header-content">
+                <div class="md-showcase__domain-badge" style="${domainBadgeStyle}">${domainIcon}${project.domain}</div>
+                <h2 class="md-showcase__title">${project.title}</h2>
+                <div class="md-showcase__meta">
+                  <span class="md-showcase__role-period"><i class="fas fa-user-tie"></i> ${role}</span>
+                  <span class="md-showcase__separator">•</span>
+                  <span class="md-showcase__time-period"><i class="far fa-calendar-alt"></i> ${years}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="md-showcase__content" style="background-color: ${lightBgColor};">
+              <div class="md-showcase__section md-showcase__overview">
+                <div class="md-showcase__description">
+                  ${project.description.split('<h4>Key Achievements:</h4>')[0]}
+                </div>
+              </div>
+              
+              <div class="md-showcase__section">
+                <div class="md-showcase__section-header">
+                  <h3 class="md-showcase__section-title"><i class="fas fa-trophy" style="color: ${lightBgColor.replace('0.03', '1')}"></i> Key Achievements</h3>
+                  <div class="md-showcase__section-bar" style="${domainBadgeStyle}"></div>
+                </div>
+                <div class="md-showcase__achievements">
+                  ${project.description.includes('<h4>Key Achievements:</h4>') ? 
+                    project.description.split('<h4>Key Achievements:</h4>')[1].split('<h4>Technologies Used:</h4>')[0] : ''}
+                </div>
+              </div>
+              
+              <div class="md-showcase__section">
+                <div class="md-showcase__section-header">
+                  <h3 class="md-showcase__section-title"><i class="fas fa-tools" style="color: ${lightBgColor.replace('0.03', '1')}"></i> Technologies Used</h3>
+                  <div class="md-showcase__section-bar" style="${domainBadgeStyle}"></div>
+                </div>
+                <div class="md-showcase__tech-container">
+                  ${project.description.includes('<div class="modal-tech-stack">') ? 
+                    project.description.split('<div class="modal-tech-stack">')[1].split('</div>')[0]
+                      .replace(/tech/g, `md-showcase__tech-item" data-color="${lightBgColor.replace('0.03', '1')}" style="border-color: ${lightBgColor.replace('0.03', '0.3')}`) : ''}
+                </div>
+              </div>
+              
+              <div class="md-showcase__section md-showcase__hire-me" style="border-color: ${lightBgColor.replace('0.03', '0.2')};">
+                <div class="md-showcase__hire-message">
+                  <div class="md-showcase__hire-icon" style="${domainBadgeStyle}">
+                    <i class="fas fa-lightbulb"></i>
+                  </div>
+                  <div class="md-showcase__hire-text">
+                    <h4>How I can add value to your team</h4>
+                    <p>My work on this project demonstrates expertise in ${project.domain} development, combining technical skills with product vision. I can bring this same passion and dedication to your organization.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="md-showcase__footer" style="background-color: ${lightBgColor};">
+              ${project.description.includes('<div class="modal-links">') ? 
+                project.description.split('<div class="modal-links">')[1].split('</div>')[0]
+                  .replace(/project-link/g, 'md-showcase__button') : ''}
+              <a href="#contact" class="md-showcase__contact-button" onclick="document.getElementById('project-modal').classList.remove('active'); document.body.style.overflow = ''; setTimeout(() => { document.getElementById('contact').scrollIntoView({behavior: 'smooth'}); }, 300);"><i class="fas fa-envelope"></i> Contact Me</a>
+            </div>
           </div>
         `;
 
@@ -392,7 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
       }
-    });
+    }
   });
 
   // Image Slider Functionality
@@ -445,13 +525,19 @@ document.addEventListener('DOMContentLoaded', () => {
     slider.addEventListener('mouseenter', stopAutoSlide);
     slider.addEventListener('mouseleave', startAutoSlide);
 
-    // Click on slider to open modal with current image
-    slider.addEventListener('click', (e) => {
+    // Ensure click handlers for sliders work properly
+    // Remove any existing click listeners to avoid duplication
+    slider.removeEventListener('click', handleSliderClick);
+    
+    // Add click handler as a named function
+    slider.addEventListener('click', handleSliderClick);
+    
+    function handleSliderClick(e) {
       e.stopPropagation(); // Prevent triggering the project card click event
       const projectCard = slider.closest('.project-card');
       const projectId = projectCard.getAttribute('data-project');
       openImageModal(projectId, currentIndex);
-    });
+    }
 
     // Start auto slide
     startAutoSlide();
@@ -465,6 +551,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Clear modal content
     modalContent.innerHTML = '';
     
+    // Create a container for the image
+    const imageContainer = document.createElement('div');
+    imageContainer.classList.add('image-modal-container');
+    imageContainer.style.backgroundColor = 'white';
+    imageContainer.style.padding = '20px';
+    imageContainer.style.borderRadius = '8px';
+    imageContainer.style.width = '100%';
+    imageContainer.style.height = '100%';
+    imageContainer.style.display = 'flex';
+    imageContainer.style.justifyContent = 'center';
+    imageContainer.style.alignItems = 'center';
+    
     // Create full-size image element
     const fullImage = document.createElement('img');
     fullImage.classList.add('modal-fullsize-image');
@@ -472,9 +570,11 @@ document.addEventListener('DOMContentLoaded', () => {
     fullImage.dataset.projectId = projectId;
     fullImage.src = sliderImages[initialImageIndex].src;
     fullImage.alt = sliderImages[initialImageIndex].alt || 'Project image';
+    fullImage.style.backgroundColor = 'white';
     
-    // Add image to modal
-    modalContent.appendChild(fullImage);
+    // Add image to container and container to modal
+    imageContainer.appendChild(fullImage);
+    modalContent.appendChild(imageContainer);
     
     // Show modal
     modal.style.display = 'flex';
@@ -538,6 +638,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 150);
   }
 
+  // Close modal when clicking outside content
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+
   // Add keyboard navigation
   window.addEventListener('keydown', (e) => {
     const modalImage = document.querySelector('.modal-fullsize-image');
@@ -570,24 +679,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // The click event will be handled by the slider or direct image click
       // functionality defined above
     });
-  });
-
-  // Close modal functionality
-  if (closeButton) {
-    closeButton.addEventListener('click', () => {
-      modal.style.display = 'none';
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    });
-  }
-
-  // Close modal when clicking outside content
-  window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.style.display = 'none';
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-    }
   });
 
   // Navbar scroll effect

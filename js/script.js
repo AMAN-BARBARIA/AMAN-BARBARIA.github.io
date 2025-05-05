@@ -203,8 +203,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         <h4>Key Achievements:</h4>
         <ul>
-          <li>Led a team of developers in creating a platform that was adopted by over 200 companies in the first six months</li>
-          <li>Improved system observability through comprehensive logging and monitoring with Datadog</li>
+          <li>Led a team of developers in building a platform that was adopted by over 200 companies</li>
+          <li>Improved system observability through comprehensive logging and monitoring with NewRelic</li>
           <li>Integrated Slack APIs for enhanced user engagement, achieving a 65% active user rate</li>
           <li>Implemented automated deployment pipelines, reducing deployment time from hours to minutes</li>
           <li>Designed and built a scalable event scheduling system that handled thousands of concurrent events</li>

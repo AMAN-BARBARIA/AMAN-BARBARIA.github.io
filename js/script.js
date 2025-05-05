@@ -163,23 +163,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
         <h4>Key Achievements:</h4>
         <ul>
-          <li>Led the development team in creating a decentralized social media platform with over 15,000 active users</li>
-          <li>Implemented AI-powered semantic search using Weaviate vector database, improving content discovery by 45%</li>
-          <li>Developed trending topics algorithm and curated news features, increasing user engagement by 28%</li>
-          <li>Integrated with Farcaster Hubs for decentralized data synchronization, ensuring data persistence and user sovereignty</li>
-          <li>Built a responsive frontend interface with React Native, providing consistent experiences across web and mobile platforms</li>
-          <li>Leveraged OpenAI's vector embeddings along with Weaviate, a vector database, to provide semantic search improving content discovery by 40%</li>
+        <li><b>Led the engineering team</b> in building a decentralized social media platform, with over <b>15,000+ active users</b> while maintaining a fast-paced release cycle.</li>
+          <li><b>Implemented AI-powered semantic search</b> using Weaviate vector database, improving content discovery by 45%</li>
+          <li>Designed and launched <b>trending topics</b> and <b>curated news</b> features, leading to a 28% increase in user engagement</li>
+          <li>Enabled <b>auto-scaling and dynamic preview environments</b> using Kubernetes, allowing seamless load-based scaling and on-demand testing of new features during development</li>
+          <li>Integrated with Farcaster Hubs for decentralized data synchronization, ensuring data persistence, user control, and platform resilience</li>
         </ul>
-        
-        <h4>Technologies Used:</h4>
-        <div class="modal-tech-stack">
-          <span class="tech">Golang</span>
-          <span class="tech">MongoDB</span>
-          <span class="tech">Weaviate (Vector DB)</span>
-          <span class="tech">React</span>
-          <span class="tech">React Native</span>
-          <span class="tech">Farcaster Protocol</span>
-        </div>
         
         <div class="modal-links">
           <a href="https://truesparrow.com/case-study/jam" class="project-link" target="_blank"><i class="fas fa-file-alt"></i> View Full Case Study</a>
@@ -199,18 +188,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <li>Designed and developed REST APIs for mobile and web apps allowing 1,00,000+ users streaming live classes in the first year.</p>
           <li>Built an internal CMS & CRM tool on Slack for the Moxie admin team, increasing operational efficiency by 2x-3x.</p>
         </ul>
-        
-        <h4>Technologies Used:</h4>
-        <div class="modal-tech-stack">
-          <span class="tech">Node.js</span>
-          <span class="tech">MySQL</span>
-          <span class="tech">Cassandra</span>
-          <span class="tech">Memcached</span>
-          <span class="tech">AWS Chime</span>
-          <span class="tech">Stripe</span>
-          <span class="tech">React</span>
-          <span class="tech">React Native</span>
-        </div>
         
         <div class="modal-links">
           <a href="https://truesparrow.com/case-study/moxie" class="project-link" target="_blank"><i class="fas fa-file-alt"></i> View Full Case Study</a>
@@ -233,16 +210,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <li>Designed and built a scalable event scheduling system that handled thousands of concurrent events</li>
         </ul>
         
-        <h4>Technologies Used:</h4>
-        <div class="modal-tech-stack">
-          <span class="tech">Golang</span>
-          <span class="tech">PostgreSQL</span>
-          <span class="tech">Kubernetes</span>
-          <span class="tech">Datadog</span>
-          <span class="tech">Docker</span>
-          <span class="tech">Slack API</span>
-        </div>
-        
         <div class="modal-links">
           <a href="https://truesparrow.com/case-study/thursday" class="project-link" target="_blank"><i class="fas fa-file-alt"></i> View Full Case Study</a>
         </div>
@@ -263,16 +230,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <li>Productized the ICO platform into a B2B product, reducing KYC processing time by 75%</li>
           <li>Implemented smart contract integrations and wallet management systems</li>
         </ul>
-        
-        <h4>Technologies Used:</h4>
-        <div class="modal-tech-stack">
-          <span class="tech">Ruby on Rails</span>
-          <span class="tech">Node.js</span>
-          <span class="tech">Ethereum</span>
-          <span class="tech">MySQL</span>
-          <span class="tech">Redis</span>
-          <span class="tech">Docker</span>
-        </div>
         
         <div class="modal-links">
           <a href="https://truesparrow.com/case-study/ost" class="project-link" target="_blank"><i class="fas fa-file-alt"></i> View Full Case Study</a>
@@ -295,15 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <li>Created an automated email template management system</li>
         </ul>
         
-        <h4>Technologies Used:</h4>
-        <div class="modal-tech-stack">
-          <span class="tech">Ruby on Rails</span>
-          <span class="tech">MySQL</span>
-          <span class="tech">AWS (S3, SES, SQS, SNS)</span>
-          <span class="tech">DynamoDB</span>
-          <span class="tech">Redis</span>
-        </div>
-        
         <div class="modal-links">
           <a href="https://truesparrow.com/case-study/pepo-campaigns" class="project-link" target="_blank"><i class="fas fa-file-alt"></i> View Full Case Study</a>
         </div>
@@ -324,15 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <li>Implemented automated reporting systems for business metrics</li>
           <li>Designed and deployed predictive analytics models for inventory management</li>
         </ul>
-        
-        <h4>Technologies Used:</h4>
-        <div class="modal-tech-stack">
-          <span class="tech">Pentaho</span>
-          <span class="tech">OLAP</span>
-          <span class="tech">ETL pipelines</span>
-          <span class="tech">Data Warehousing</span>
-          <span class="tech">SQL</span>
-        </div>
         
         <div class="modal-links">
           <a href="https://truesparrow.com/case-study/hem" class="project-link" target="_blank"><i class="fas fa-file-alt"></i> View Full Case Study</a>
@@ -425,18 +364,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="md-showcase__achievements">
                   ${project.description.includes('<h4>Key Achievements:</h4>') ? 
                     project.description.split('<h4>Key Achievements:</h4>')[1].split('<h4>Technologies Used:</h4>')[0] : ''}
-                </div>
-              </div>
-              
-              <div class="md-showcase__section">
-                <div class="md-showcase__section-header">
-                  <h3 class="md-showcase__section-title"><i class="fas fa-tools" style="color: ${lightBgColor.replace('0.03', '1')}"></i> Technologies Used</h3>
-                  <div class="md-showcase__section-bar" style="${domainBadgeStyle}"></div>
-                </div>
-                <div class="md-showcase__tech-container">
-                  ${project.description.includes('<div class="modal-tech-stack">') ? 
-                    project.description.split('<div class="modal-tech-stack">')[1].split('</div>')[0]
-                      .replace(/tech/g, `md-showcase__tech-item" data-color="${lightBgColor.replace('0.03', '1')}" style="border-color: ${lightBgColor.replace('0.03', '0.3')}`) : ''}
                 </div>
               </div>
               
